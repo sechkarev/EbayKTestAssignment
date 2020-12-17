@@ -60,7 +60,7 @@ the user should be able to swipe through the gallery (Font size: 14, Text color:
 * The app should load images from the URL that is part of the response
 
 ### API Details
-* API endpoint URL: https://bff.ebay-kleinanzeigen.de/candidates/ads/{ad_id}
+* API endpoint URL: https://gateway.ebay-kleinanzeigen.de/mobile-api/candidate/ads/{ad_id}
 * Ad ID to request: 1118635128
 * Authorization: Basic Authentication
 * Credentials:
@@ -71,18 +71,18 @@ the user should be able to swipe through the gallery (Font size: 14, Text color:
 * To generate the real image url replace the {imageId} placeholder with the string 1 or 57 accordingly for preview or full size.
 
 Example:
-`https://i.ebayimg.com/00/s/NzY4WDEwMjQ=/z/VAsAAOSw8lpZLnAH/$_{imageId}.JPG`
+`https://i.ebayimg.com/00/s/NjAwWDgwMA==/z/UhYAAOSweiZf0KEb/$_{imageId}.JPG`
 should be converted to
-`https://i.ebayimg.com/00/s/NzY4WDEwMjQ=/z/VAsAAOSw8lpZLnAH/$_1.JPG` for preview
+`https://i.ebayimg.com/00/s/NjAwWDgwMA==/z/UhYAAOSweiZf0KEb/$_1.JPG` for preview
 and
-`https://i.ebayimg.com/00/s/NzY4WDEwMjQ=/z/VAsAAOSw8lpZLnAH/$_57.JPG` for full size image.
+`https://i.ebayimg.com/00/s/NjAwWDgwMA==/z/UhYAAOSweiZf0KEb/$_57.JPG` for full size image.
 
 ### Sample Json Output
 
 **Run this curl command to get the sample data:**
 
 ```
-curl --basic -u candidate:yx6Xz62y https://bff.ebay-kleinanzeigen.de/candidates/ads/1118635128
+curl --basic -u candidate:yx6Xz62y --user-agent "some-user-aget" https://gateway.ebay-kleinanzeigen.de/mobile-api/candidate/ads/1118635128
 ```
 
 ## Final Remarks
