@@ -82,7 +82,7 @@ and
 **Run this curl command to get the sample data:**
 
 ```
-curl --basic -u candidate:yx6Xz62y --user-agent "some-user-aget" https://gateway.ebay-kleinanzeigen.de/mobile-api/candidate/ads/1118635128
+curl --basic -u candidate:yx6Xz62y --user-agent "some-user-agent" https://gateway.ebay-kleinanzeigen.de/mobile-api/candidate/ads/1118635128
 ```
 
 ## Final Remarks
