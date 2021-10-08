@@ -1,6 +1,6 @@
 # eBay Kleinanzeigen Android Coding Challenge
 
-Congratulations! You made it to the eBay Kleinanzeigen remote coding challenge for Android. Here, we want to get a taste of your hands-on coding skills as well as your understanding of design and product.
+Congratulations! You made it to the eBay Kleinanzeigen remote coding challenge for Android. Here, we want to get a taste of your hands-on coding skills as well as your understanding of design and product descriptions.
 
 ## Background
 Since our View Item Page (= VIP) is a bit outdated, we want to re-brush our VIP on all platforms – also on Android.
@@ -87,8 +87,8 @@ curl --basic -u candidate:yx6Xz62y --user-agent "some-user-agent" https://gatewa
 
 ## Final Remarks
 
-* You have 4 hours to complete the challenge.
-* If you can’t manage to finish all the details during the given time, no worries! What’s important is how you approach the challenge.
+* You have 1 week to complete the challenge.
+* It is expected to provide a solution with a good architectural structure and preferably with some tests.
 * Please fill out the rest of this README file that explains your approach.
 * Once you’re done with the challenge, please zip the project folder, upload it to Google Drive and send us the publicly available link to the zip file on Google Drive.
 
