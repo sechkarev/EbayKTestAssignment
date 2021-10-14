@@ -71,11 +71,11 @@ the user should be able to swipe through the gallery (Font size: 14, Text color:
 * To generate the real image url replace the {imageId} placeholder with the string 1 or 57 accordingly for preview or full size.
 
 Example:
-`https://i.ebayimg.com/00/s/NjAwWDgwMA==/z/UhYAAOSweiZf0KEb/$_{imageId}.JPG`
+`https://i.ebayimg.com/00/s/MTA2NlgxNjAw/z/~CoAAOSwjZJhSgCC/$_{imageId}.JPG`
 should be converted to
-`https://i.ebayimg.com/00/s/NjAwWDgwMA==/z/UhYAAOSweiZf0KEb/$_1.JPG` for preview
+`https://i.ebayimg.com/00/s/MTA2NlgxNjAw/z/~CoAAOSwjZJhSgCC/$_1.JPG` for preview
 and
-`https://i.ebayimg.com/00/s/NjAwWDgwMA==/z/UhYAAOSweiZf0KEb/$_57.JPG` for full size image.
+`https://i.ebayimg.com/00/s/MTA2NlgxNjAw/z/~CoAAOSwjZJhSgCC/$_57.JPG` for full size image.
 
 ### Sample Json Output
 
