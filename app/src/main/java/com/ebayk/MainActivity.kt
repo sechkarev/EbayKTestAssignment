@@ -24,12 +24,14 @@ import coil.compose.rememberImagePainter
 import com.ebayk.ui.theme.AppTheme
 import com.ebayk.ui.theme.Black202020
 import com.ebayk.ui.theme.Black80202020
+import com.ebayk.ui.theme.Green500
 import com.ebayk.viewmodel.MainViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 @ExperimentalPagerApi
 class MainActivity : ComponentActivity() {
@@ -89,11 +91,17 @@ class MainActivity : ComponentActivity() {
                                 color = Black202020,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp)
                             )
                         }
                         item {
-
+                            Text(
+                                text = "${apartmentInfo.price.amount} ${Currency.getInstance(apartmentInfo.price.currency).symbol}",
+                                color = Green500,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                            )
                         }
                     }
                 }
