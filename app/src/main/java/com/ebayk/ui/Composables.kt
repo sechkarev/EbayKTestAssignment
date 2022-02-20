@@ -35,7 +35,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun AdvertisementScreen(apartmentInfoLiveData: LiveData<ApartmentDetails?>) {
+fun AdvertisementScreen(
+    apartmentInfoLiveData: LiveData<ApartmentDetails?>,
+    onAddressClick: (String, String) -> Unit,
+    onDocumentClick: (String) -> Unit,
+) {
     AppTheme {
         ProvideWindowInsets {
             val systemUiController = rememberSystemUiController()
@@ -44,13 +48,17 @@ fun AdvertisementScreen(apartmentInfoLiveData: LiveData<ApartmentDetails?>) {
             }
             val apartmentInfo = apartmentInfoLiveData.observeAsState().value!!
             // todo: show error if null
-            Advertisement(apartmentInfo = apartmentInfo)
+            Advertisement(apartmentInfo, onAddressClick, onDocumentClick)
         }
     }
 }
 
 @Composable
-private fun Advertisement(apartmentInfo: ApartmentDetails) {
+private fun Advertisement(
+    apartmentInfo: ApartmentDetails,
+    onAddressClick: (String, String) -> Unit,
+    onDocumentClick: (String) -> Unit,
+) {
     LazyColumn {
         item {
             PhotoPager(pictureUrls = apartmentInfo.pictures)
@@ -81,7 +89,10 @@ private fun Advertisement(apartmentInfo: ApartmentDetails) {
                 modifier = Modifier
                     .padding(start = 8.dp, end = 8.dp, top = 8.dp)
                     .clickable {
-                        // todo: open maps
+                        onAddressClick(
+                            apartmentInfo.address.latitude,
+                            apartmentInfo.address.longitude,
+                        )
                     }
             )
         }
@@ -104,7 +115,10 @@ private fun Advertisement(apartmentInfo: ApartmentDetails) {
         }
         if (apartmentInfo.documents.isNotEmpty()) {
             item {
-                AdditionalInfo(documents = apartmentInfo.documents)
+                AdditionalInfo(
+                    documents = apartmentInfo.documents,
+                    onDocumentClick = onDocumentClick,
+                )
             }
         }
         if (apartmentInfo.description.isNotBlank()) {
@@ -159,7 +173,7 @@ private fun AdMetadata(
     visits: Int,
     apartmentId: String,
 ) {
-    Row(Modifier.padding(start = 8.dp, end = 8.dp, top = 24.dp, bottom = 24.dp)) {
+    Row(Modifier.padding(start = 8.dp, end = 8.dp, top = 24.dp, bottom = 16.dp)) {
         DrawableWrapper(
             drawableStart = R.drawable.ic_calendar,
             modifier = Modifier.padding(end = 16.dp)
@@ -168,7 +182,7 @@ private fun AdMetadata(
                 text = postDate.substringBefore("T").let {
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(it)?.let { date ->
                         SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
-                    }
+                    } // todo: transfer parsing to VM
                 }.orEmpty(),
                 color = Gray600,
                 fontSize = 14.sp,
@@ -273,7 +287,10 @@ private fun Features(features: List<String>) {
 }
 
 @Composable
-private fun AdditionalInfo(documents: List<Document>) {
+private fun AdditionalInfo(
+    documents: List<Document>,
+    onDocumentClick: (String) -> Unit,
+) {
     Column(Modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
@@ -299,9 +316,7 @@ private fun AdditionalInfo(documents: List<Document>) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable {
-                        // todo: on pdf clicked
-                    }
+                    .clickable { onDocumentClick(it.link) }
             ) {
                 Row(Modifier.padding(vertical = 8.dp, horizontal = 8.dp)) {
                     DrawableWrapper(
