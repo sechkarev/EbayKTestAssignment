@@ -4,9 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,20 +19,105 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
 import coil.compose.rememberImagePainter
 import com.ebayk.R
+import com.ebayk.dto.ApartmentDetails
 import com.ebayk.dto.Attribute
 import com.ebayk.dto.Document
 import com.ebayk.ui.theme.*
 import com.ebayk.util.divideToPairs
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Composable
+fun AdvertisementScreen(apartmentInfoLiveData: LiveData<ApartmentDetails?>) {
+    AppTheme {
+        ProvideWindowInsets {
+            val systemUiController = rememberSystemUiController()
+            SideEffect {
+                systemUiController.setSystemBarsColor(Color.Transparent)
+            }
+            val apartmentInfo = apartmentInfoLiveData.observeAsState().value!!
+            // todo: show error if null
+            Advertisement(apartmentInfo = apartmentInfo)
+        }
+    }
+}
+
+@Composable
+private fun Advertisement(apartmentInfo: ApartmentDetails) {
+    LazyColumn {
+        item {
+            PhotoPager(pictureUrls = apartmentInfo.pictures)
+        }
+        item {
+            Text(
+                text = apartmentInfo.title,
+                color = Black202020,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp)
+            )
+        }
+        item {
+            Text(
+                text = "${apartmentInfo.price.amount} ${Currency.getInstance(apartmentInfo.price.currency).symbol}",
+                color = Green500,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+            )
+        }
+        item {
+            Text(
+                text = "${apartmentInfo.address.street}, ${apartmentInfo.address.zipCode} ${apartmentInfo.address.city}",
+                color = Gray600,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp, top = 8.dp)
+                    .clickable {
+                        // todo: open maps
+                    }
+            )
+        }
+        item {
+            AdMetadata(
+                postDate = apartmentInfo.postDate,
+                visits = apartmentInfo.visits,
+                apartmentId = apartmentInfo.id,
+            )
+        }
+        if (apartmentInfo.attributes.isNotEmpty()) {
+            item {
+                Details(attributes = apartmentInfo.attributes)
+            }
+        }
+        if (apartmentInfo.features.isNotEmpty()) {
+            item {
+                Features(features = apartmentInfo.features)
+            }
+        }
+        if (apartmentInfo.documents.isNotEmpty()) {
+            item {
+                AdditionalInfo(documents = apartmentInfo.documents)
+            }
+        }
+        if (apartmentInfo.description.isNotBlank()) {
+            item {
+                Description(description = apartmentInfo.description)
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun PhotoPager(pictureUrls: List<String>) {
+private fun PhotoPager(pictureUrls: List<String>) {
     HorizontalPager(count = pictureUrls.size) { page ->
         Box(
             modifier = Modifier
@@ -66,7 +154,7 @@ fun PhotoPager(pictureUrls: List<String>) {
 }
 
 @Composable
-fun AdMetadata(
+private fun AdMetadata(
     postDate: String,
     visits: Int,
     apartmentId: String,
@@ -105,7 +193,7 @@ fun AdMetadata(
 }
 
 @Composable
-fun Details(attributes: List<Attribute>) {
+private fun Details(attributes: List<Attribute>) {
     Column {
         Box(
             modifier = Modifier
@@ -151,7 +239,7 @@ fun Details(attributes: List<Attribute>) {
 }
 
 @Composable
-fun Features(features: List<String>) {
+private fun Features(features: List<String>) {
     Column(modifier = Modifier.padding(bottom = 8.dp)) {
         Box(
             modifier = Modifier
@@ -185,7 +273,7 @@ fun Features(features: List<String>) {
 }
 
 @Composable
-fun AdditionalInfo(documents: List<Document>) {
+private fun AdditionalInfo(documents: List<Document>) {
     Column(Modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
@@ -235,6 +323,39 @@ fun AdditionalInfo(documents: List<Document>) {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun Description(description: String) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+                .background(WhiteF2F2F2)
+        )
+        Text(
+            text = stringResource(id = R.string.description),
+            color = Black202020,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(WhiteF2F2F2)
+                .padding(start = 8.dp, end = 8.dp)
+        )
+        Text(
+            text = description,
+            color = Black202020,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 12.dp)
+        )
     }
 }
 
