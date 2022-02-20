@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">EbayKCodingChallenge</string>
+    <string name="data_loading">Data is loading…</string>
+    <string name="data_load_error">Failed to load data. Click here to try again</string>
     <string name="apartment_id">ID: %s</string>
     <string name="details">Details</string>
     <string name="features">Ausstattung</string>

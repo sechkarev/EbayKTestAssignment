@@ -26,6 +26,7 @@ import com.ebayk.dto.ApartmentDetails
 import com.ebayk.dto.Attribute
 import com.ebayk.dto.Document
 import com.ebayk.ui.theme.*
+import com.ebayk.util.ApartmentInfoLoadingStatus
 import com.ebayk.util.divideToPairs
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -35,9 +36,10 @@ import java.util.*
 
 @Composable
 fun AdvertisementScreen(
-    apartmentInfoLiveData: LiveData<ApartmentDetails?>,
+    apartmentInfoLiveData: LiveData<ApartmentInfoLoadingStatus>,
     onAddressClick: (String, String) -> Unit,
     onDocumentClick: (String) -> Unit,
+    onErrorMessageClick: () -> Unit,
 ) {
     AppTheme {
         ProvideWindowInsets {
@@ -45,10 +47,42 @@ fun AdvertisementScreen(
             SideEffect {
                 systemUiController.setSystemBarsColor(Color.Transparent)
             }
-            val apartmentInfo = apartmentInfoLiveData.observeAsState().value!!
-            // todo: show error if null
-            Advertisement(apartmentInfo, onAddressClick, onDocumentClick)
+            when (val apartmentInfoLoadingStatus = apartmentInfoLiveData.observeAsState().value) {
+                is ApartmentInfoLoadingStatus.Error -> ErrorMessage(onErrorMessageClick)
+                is ApartmentInfoLoadingStatus.Loading -> LoadingMessage()
+                is ApartmentInfoLoadingStatus.Success -> Advertisement(
+                    apartmentInfo = apartmentInfoLoadingStatus.data,
+                    onAddressClick = onAddressClick,
+                    onDocumentClick = onDocumentClick
+                )
+                else -> {}
+            }
         }
+    }
+}
+
+@Composable
+private fun ErrorMessage(onErrorMessageClick: () -> Unit) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text(
+            text = stringResource(id = R.string.data_load_error),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(horizontal = 48.dp)
+                .clickable { onErrorMessageClick() }
+        )
+    }
+}
+
+@Composable
+private fun LoadingMessage() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text(
+            text = stringResource(id = R.string.data_loading),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(horizontal = 48.dp)
+        )
     }
 }
 

@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
                 apartmentInfoLiveData = viewModel.apartmentInfo,
                 onAddressClick = this::openLocationOnMap,
                 onDocumentClick = this::openDocument,
+                onErrorMessageClick = viewModel::onErrorMessageClick,
             )
         }
     }
