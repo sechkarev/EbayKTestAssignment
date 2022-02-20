@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.SideEffect
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import coil.compose.rememberImagePainter
 import com.ebayk.ui.theme.AppTheme
+import com.ebayk.ui.theme.Black202020
 import com.ebayk.ui.theme.Black80202020
 import com.ebayk.viewmodel.MainViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -44,39 +46,54 @@ class MainActivity : ComponentActivity() {
                     SideEffect {
                         systemUiController.setSystemBarsColor(Transparent)
                     }
-                    val photoUrls = viewModel.imageUrls.observeAsState().value ?: emptyList()
-                    HorizontalPager(count = photoUrls.size) { page ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight()
-                        ) {
-                            Image(
-                                painter = rememberImagePainter(photoUrls[page]),
-                                contentDescription = null,
-                                contentScale = ContentScale.FillWidth,
-                                modifier = Modifier
-                                    .height(250.dp)
-                                    .fillMaxWidth()
-                            )
-                            Box(
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .padding(vertical = 16.dp, horizontal = 16.dp)
-                                    .background(
-                                        color = Black80202020,
-                                        shape = RoundedCornerShape(2.dp)
-                                    )
-                            ) {
-                                Text(
-                                    text = "${page + 1}/${photoUrls.size}",
-                                    color = White,
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Medium,
+                    val apartmentInfo = viewModel.apartmentInfo.observeAsState().value!! // todo: show error?
+                    LazyColumn {
+                        item {
+                            HorizontalPager(count = apartmentInfo.pictures.size) { page ->
+                                Box(
                                     modifier = Modifier
-                                        .padding(horizontal = 6.dp, vertical = 3.dp)
-                                )
+                                        .fillMaxWidth()
+                                        .wrapContentHeight()
+                                ) {
+                                    Image(
+                                        painter = rememberImagePainter(apartmentInfo.pictures[page]),
+                                        contentDescription = null,
+                                        contentScale = ContentScale.FillWidth,
+                                        modifier = Modifier
+                                            .height(250.dp)
+                                            .fillMaxWidth()
+                                    )
+                                    Box(
+                                        modifier = Modifier
+                                            .align(Alignment.BottomEnd)
+                                            .padding(vertical = 16.dp, horizontal = 16.dp)
+                                            .background(
+                                                color = Black80202020,
+                                                shape = RoundedCornerShape(2.dp)
+                                            )
+                                    ) {
+                                        Text(
+                                            text = "${page + 1}/${apartmentInfo.pictures.size}",
+                                            color = White,
+                                            fontSize = 12.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
+                                        )
+                                    }
+                                }
                             }
+                        }
+                        item {
+                            Text(
+                                text = apartmentInfo.title,
+                                color = Black202020,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            )
+                        }
+                        item {
+
                         }
                     }
                 }
