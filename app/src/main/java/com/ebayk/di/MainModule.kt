@@ -3,7 +3,6 @@ package com.ebayk.di
 import com.ebayk.remote.Endpoints
 import com.ebayk.usecase.RetrieveApartmentInfo
 import com.ebayk.viewmodel.MainViewModel
-import com.ebayk.viewmodel.MainViewModelImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -26,6 +25,6 @@ val MainModule = module {
     }
 
     viewModel {
-        MainViewModelImpl(get())
+        MainViewModel(get())
     }
 }

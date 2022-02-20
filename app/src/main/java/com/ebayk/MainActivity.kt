@@ -23,7 +23,6 @@ import coil.compose.rememberImagePainter
 import com.ebayk.ui.theme.AppTheme
 import com.ebayk.ui.theme.Black80202020
 import com.ebayk.viewmodel.MainViewModel
-import com.ebayk.viewmodel.MainViewModelImpl
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -33,7 +32,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 @ExperimentalPagerApi
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModelImpl by viewModel()
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
