@@ -40,5 +40,5 @@ class MainActivity : ComponentActivity() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
         startActivity(Intent.createChooser(intent, getString(R.string.select_app_to_open_pdf)))
     }
-    // todo: проверить на старых девайсах с навбаром
+    // todo: навбар не должен быть прозрачным; статус бару хорошо бы темнеть, когда я не смотрю картинки.
 }
