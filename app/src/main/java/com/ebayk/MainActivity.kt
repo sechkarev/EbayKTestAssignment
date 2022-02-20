@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
@@ -107,6 +108,39 @@ class MainActivity : ComponentActivity() {
                         if (apartmentInfo.documents.isNotEmpty()) {
                             item {
                                 AdditionalInfo(documents = apartmentInfo.documents)
+                            }
+                        }
+                        if (apartmentInfo.description.isNotBlank()) {
+                            item {
+                                Column(modifier = Modifier.fillMaxWidth()) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(8.dp)
+                                            .background(WhiteF2F2F2)
+                                    )
+                                    Text(
+                                        text = stringResource(id = R.string.description),
+                                        color = Black202020,
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
+                                    )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(1.dp)
+                                            .background(WhiteF2F2F2)
+                                            .padding(start = 8.dp, end = 8.dp)
+                                    )
+                                    Text(
+                                        text = apartmentInfo.description,
+                                        color = Black202020,
+                                        fontSize = 14.sp,
+                                        lineHeight = 20.sp,
+                                        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 12.dp)
+                                    )
+                                }
                             }
                         }
                     }

@@ -228,7 +228,7 @@ fun AdditionalInfo(documents: List<Document>) {
                     }
                     Spacer(Modifier.weight(1f))
                     Image(
-                        painter = painterResource(id = R.drawable.chevron),
+                        painter = painterResource(id = R.drawable.chevron), // todo: шеврон не по центру
                         contentDescription = null,
                         modifier = Modifier.padding(end = 8.dp)
                     )
