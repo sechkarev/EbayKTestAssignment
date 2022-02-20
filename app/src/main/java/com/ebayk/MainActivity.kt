@@ -24,8 +24,11 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import coil.compose.rememberImagePainter
 import com.ebayk.ui.AdMetadata
+import com.ebayk.ui.Details
+import com.ebayk.ui.Features
 import com.ebayk.ui.PhotoPager
 import com.ebayk.ui.theme.*
+import com.ebayk.util.divideToPairs
 import com.ebayk.viewmodel.MainViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -94,45 +97,12 @@ class MainActivity : ComponentActivity() {
                         }
                         if (apartmentInfo.attributes.isNotEmpty()) {
                             item {
-                                Column {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(8.dp)
-                                            .background(WhiteF2F2F2)
-                                    )
-                                    Text(
-                                        text = stringResource(id = R.string.details),
-                                        color = Black202020,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 8.dp)
-                                    )
-                                    apartmentInfo.attributes.forEach {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(1.dp)
-                                                .background(WhiteF2F2F2)
-                                                .padding(top = 4.dp, start = 8.dp, end = 8.dp)
-                                        )
-                                        Row(Modifier.fillMaxWidth().padding(vertical = 8.dp, horizontal = 8.dp)) {
-                                            Text(
-                                                text = it.label,
-                                                color = Black202020,
-                                                fontSize = 14.sp,
-                                                modifier = Modifier.padding(end = 8.dp)
-                                            )
-                                            Spacer(Modifier.weight(1f))
-                                            Text(
-                                                text = if (it.unit.isNullOrBlank()) it.value else "${it.value} ${it.unit}",
-                                                color = Gray600,
-                                                fontSize = 14.sp,
-                                                modifier = Modifier.padding(start = 8.dp)
-                                            )
-                                        }
-                                    }
-                                }
+                                Details(attributes = apartmentInfo.attributes)
+                            }
+                        }
+                        if (apartmentInfo.features.isNotEmpty()) {
+                            item {
+                                Features(features = apartmentInfo.features)
                             }
                         }
                     }

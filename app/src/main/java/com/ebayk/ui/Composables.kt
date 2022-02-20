@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.ebayk.R
-import com.ebayk.ui.theme.Black80202020
-import com.ebayk.ui.theme.DrawableWrapper
-import com.ebayk.ui.theme.Gray600
+import com.ebayk.dto.Attribute
+import com.ebayk.ui.theme.*
+import com.ebayk.util.divideToPairs
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import java.text.SimpleDateFormat
@@ -97,6 +97,101 @@ fun AdMetadata(
             text = stringResource(R.string.apartment_id, apartmentId),
             color = Gray600,
             fontSize = 14.sp,
+        )
+    }
+}
+
+@Composable
+fun Details(attributes: List<Attribute>) {
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+                .background(WhiteF2F2F2)
+        )
+        Text(
+            text = stringResource(id = R.string.details),
+            color = Black202020,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 8.dp)
+        )
+        attributes.forEach {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(WhiteF2F2F2)
+                    .padding(top = 4.dp, start = 8.dp, end = 8.dp) // todo: мне кажется, или она все равно до краев расползается?
+            )
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp, horizontal = 8.dp)) {
+                Text(
+                    text = it.label,
+                    color = Black202020,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    text = if (it.unit.isNullOrBlank()) it.value else "${it.value} ${it.unit}",
+                    color = Gray600,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun Features(features: List<String>) {
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+                .background(WhiteF2F2F2)
+        )
+        Text(
+            text = stringResource(id = R.string.features),
+            color = Black202020,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(WhiteF2F2F2)
+                .padding(top = 4.dp, start = 8.dp, end = 8.dp)
+        )
+        features.divideToPairs().forEach {
+            Row(modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)) {
+                TextWithCheckMark(text = it.first, modifier = Modifier.weight(1f))
+                it.second?.let {
+                    TextWithCheckMark(text = it, Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TextWithCheckMark(text: String, modifier: Modifier) {
+    DrawableWrapper(
+        drawableStart = R.drawable.ic_check,
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            color = Black202020,
+            fontSize = 14.sp,
+            modifier = Modifier.padding(start = 8.dp),
         )
     }
 }
