@@ -31,12 +31,13 @@ class MainActivity : ComponentActivity() {
 
     private fun openLocationOnMap(latitude: String, longitude: String) {
         val uri = String.format(Locale.getDefault(), "geo:%s,%s", latitude, longitude)
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        startActivity(Intent.createChooser(intent, getString(R.string.select_app_to_open_location)))
     }
 
     private fun openDocument(link: String) {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-        startActivity(browserIntent)
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        startActivity(Intent.createChooser(intent, getString(R.string.select_app_to_open_pdf)))
     }
     // todo: проверить на старых девайсах с навбаром
     // todo: проверить с большим текстом
