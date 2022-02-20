@@ -9,8 +9,8 @@ class RetrieveApartmentInfo(
 ) {
 
     suspend operator fun invoke(): ApartmentDetails {
-        delay(3000)
-        if (Math.random() > 0.7) { return testApartmentInfo } else throw Exception()
+        delay(100)
+        return testApartmentInfo
     }
     // todo: use endpoints.retrieveApartmentInfo()
 
@@ -86,7 +86,7 @@ class RetrieveApartmentInfo(
                 ),
                 Document(
                     link = "https://ebay-kleinanzeigen-user-content.de/dokumente/2972ace9-271f-4b7c-b55b-4d3e4d6538bd.pdf",
-                    title = "Energieausweis",
+                    title = "Energieausweis Energieausweis Energieausweis",
                 ),
             ),
         )

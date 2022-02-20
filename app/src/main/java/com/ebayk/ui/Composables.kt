@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.LiveData
 import coil.compose.rememberImagePainter
 import com.ebayk.R
@@ -357,22 +358,39 @@ private fun AdditionalInfo(
                     .fillMaxWidth()
                     .clickable { onDocumentClick(it.link) }
             ) {
-                Row(Modifier.padding(vertical = 8.dp, horizontal = 8.dp)) {
+                ConstraintLayout(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp, horizontal = 8.dp)
+                        .fillMaxWidth()
+                ) {
+                    val (textWithWrapper, chevronDrawable) = createRefs()
                     DrawableWrapper(
                         drawableStart = R.drawable.ic_document,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp)
+                            .constrainAs(textWithWrapper) {
+                                start.linkTo(parent.start)
+                                end.linkTo(chevronDrawable.start)
+                            }
                     ) {
                         Text(
                             text = it.title,
                             color = Black202020,
                             fontSize = 14.sp,
-                            modifier = Modifier.padding(start = 8.dp),
+                            modifier = Modifier.padding(start = 8.dp)
                         )
                     }
-                    Spacer(Modifier.weight(1f))
                     Image(
-                        painter = painterResource(id = R.drawable.chevron), // todo: шеврон не по центру
+                        painter = painterResource(id = R.drawable.chevron),
                         contentDescription = null,
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .constrainAs(chevronDrawable) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                                end.linkTo(parent.end)
+                            }
                     )
                 }
             }

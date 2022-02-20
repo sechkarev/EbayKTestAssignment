@@ -1,4 +1,4 @@
-package com.ebayk.ui.theme
+package com.ebayk.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -15,10 +15,10 @@ fun DrawableWrapper(
     content: @Composable () -> Unit,
 ) {
     ConstraintLayout(modifier) {
-        val (refImgStart, _, _, _, refContent) = createRefs()
+        val (drawableStartRef, contentRef) = createRefs()
         Box(
-            Modifier.constrainAs(refContent) {
-                start.linkTo(refImgStart.end)
+            Modifier.constrainAs(contentRef) {
+                start.linkTo(drawableStartRef.end)
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
             }
@@ -28,9 +28,9 @@ fun DrawableWrapper(
         Image(
             painter = painterResource(id = drawableStart),
             contentDescription = null,
-            Modifier.constrainAs(refImgStart) {
-                top.linkTo(refContent.top)
-                bottom.linkTo(refContent.bottom)
+            Modifier.constrainAs(drawableStartRef) {
+                top.linkTo(contentRef.top)
+                bottom.linkTo(contentRef.bottom)
                 start.linkTo(parent.start)
             }
         )
