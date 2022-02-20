@@ -58,7 +58,7 @@ class RetrieveApartmentInfo(
                 ),
                 Attribute(
                     label = "Provision",
-                    value = "Keine zusätzliche Keine zusätzliche",
+                    value = "Keine zusätzliche Keine zusätzliche Keine zusätzliche",
                     unit = "",
                 ),
             ),

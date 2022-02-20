@@ -17,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -175,7 +176,7 @@ private fun PhotoPager(pictureUrls: List<String>) {
             Image(
                 painter = rememberImagePainter(pictureUrls[page]),
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .height(250.dp)
                     .fillMaxWidth()
@@ -197,6 +198,7 @@ private fun PhotoPager(pictureUrls: List<String>) {
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                 )
             }
+            // todo: share button
         }
     }
 }
@@ -261,20 +263,22 @@ private fun Details(attributes: List<Attribute>) {
                     .padding(top = 4.dp, start = 8.dp, end = 8.dp) // todo: мне кажется, или она все равно до краев расползается?
             )
             Row(
-                Modifier
+                modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp, horizontal = 8.dp)) {
+                    .padding(vertical = 8.dp, horizontal = 8.dp)
+            ) {
                 Text(
                     text = it.label,
                     color = Black202020,
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(end = 8.dp)
+                    modifier = Modifier.padding(end = 8.dp).align(Alignment.CenterVertically)
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
                     text = if (it.unit.isNullOrBlank()) it.value else "${it.value} ${it.unit}",
                     color = Gray600,
                     fontSize = 14.sp,
+                    textAlign = TextAlign.End,
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
