@@ -58,13 +58,13 @@ class RetrieveApartmentInfo(
                 ),
                 Attribute(
                     label = "Provision",
-                    value = "Keine zusätzliche Käuferprovision",
+                    value = "Keine zusätzliche Keine zusätzliche",
                     unit = "",
                 ),
             ),
             features = listOf(
                 "Balkon",
-                "Garage / Stellplatz",
+                "Garage / Stellplatz / Stellplatz",
                 "Dusche",
                 "Aufzug",
                 "Keller",

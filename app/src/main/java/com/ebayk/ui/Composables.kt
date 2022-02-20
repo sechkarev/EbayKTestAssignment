@@ -306,9 +306,19 @@ private fun Features(features: List<String>) {
         )
         features.divideToPairs().forEach {
             Row(modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)) {
-                TextWithCheckMark(text = it.first, modifier = Modifier.weight(1f))
+                TextWithCheckMark(
+                    text = it.first,
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically),
+                )
                 it.second?.let {
-                    TextWithCheckMark(text = it, Modifier.weight(1f))
+                    TextWithCheckMark(
+                        text = it,
+                        modifier = Modifier
+                            .weight(1f)
+                            .align(Alignment.CenterVertically),
+                    )
                 }
             }
         }
