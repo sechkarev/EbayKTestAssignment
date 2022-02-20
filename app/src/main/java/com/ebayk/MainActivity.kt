@@ -95,11 +95,43 @@ class MainActivity : ComponentActivity() {
                         if (apartmentInfo.attributes.isNotEmpty()) {
                             item {
                                 Column {
-                                    Spacer(
+                                    Box(
                                         modifier = Modifier
+                                            .fillMaxWidth()
                                             .height(8.dp)
                                             .background(WhiteF2F2F2)
                                     )
+                                    Text(
+                                        text = stringResource(id = R.string.details),
+                                        color = Black202020,
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 8.dp)
+                                    )
+                                    apartmentInfo.attributes.forEach {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(1.dp)
+                                                .background(WhiteF2F2F2)
+                                                .padding(top = 4.dp, start = 8.dp, end = 8.dp)
+                                        )
+                                        Row(Modifier.fillMaxWidth().padding(vertical = 8.dp, horizontal = 8.dp)) {
+                                            Text(
+                                                text = it.label,
+                                                color = Black202020,
+                                                fontSize = 14.sp,
+                                                modifier = Modifier.padding(end = 8.dp)
+                                            )
+                                            Spacer(Modifier.weight(1f))
+                                            Text(
+                                                text = if (it.unit.isNullOrBlank()) it.value else "${it.value} ${it.unit}",
+                                                color = Gray600,
+                                                fontSize = 14.sp,
+                                                modifier = Modifier.padding(start = 8.dp)
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
