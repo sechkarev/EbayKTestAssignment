@@ -31,7 +31,6 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
@@ -179,11 +178,7 @@ private fun AdMetadata(
             modifier = Modifier.padding(end = 16.dp)
         ) {
             Text(
-                text = postDate.substringBefore("T").let {
-                    SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(it)?.let { date ->
-                        SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date)
-                    } // todo: transfer parsing to VM
-                }.orEmpty(),
+                text = postDate,
                 color = Gray600,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp),

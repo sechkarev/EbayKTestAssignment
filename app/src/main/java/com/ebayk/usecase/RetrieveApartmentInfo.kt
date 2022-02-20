@@ -8,7 +8,7 @@ class RetrieveApartmentInfo(
 ) {
 
     suspend operator fun invoke(): ApartmentDetails = testApartmentInfo
-//        endpoints.retrieveApartmentInfo()
+//        todo: use endpoints.retrieveApartmentInfo()
 
     companion object {
         val testApartmentInfo = ApartmentDetails(
