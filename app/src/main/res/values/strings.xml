@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EbayKCodingChallenge</string>
+    <string name="apartment_id">ID: %s</string>
 </resources>

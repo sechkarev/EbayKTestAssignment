@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,21 +17,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import coil.compose.rememberImagePainter
-import com.ebayk.ui.theme.AppTheme
-import com.ebayk.ui.theme.Black202020
-import com.ebayk.ui.theme.Black80202020
-import com.ebayk.ui.theme.Green500
+import com.ebayk.ui.AdMetadata
+import com.ebayk.ui.PhotoPager
+import com.ebayk.ui.theme.*
 import com.ebayk.viewmodel.MainViewModel
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 @ExperimentalPagerApi
@@ -51,39 +53,7 @@ class MainActivity : ComponentActivity() {
                     val apartmentInfo = viewModel.apartmentInfo.observeAsState().value!! // todo: show error?
                     LazyColumn {
                         item {
-                            HorizontalPager(count = apartmentInfo.pictures.size) { page ->
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .wrapContentHeight()
-                                ) {
-                                    Image(
-                                        painter = rememberImagePainter(apartmentInfo.pictures[page]),
-                                        contentDescription = null,
-                                        contentScale = ContentScale.FillWidth,
-                                        modifier = Modifier
-                                            .height(250.dp)
-                                            .fillMaxWidth()
-                                    )
-                                    Box(
-                                        modifier = Modifier
-                                            .align(Alignment.BottomEnd)
-                                            .padding(vertical = 16.dp, horizontal = 16.dp)
-                                            .background(
-                                                color = Black80202020,
-                                                shape = RoundedCornerShape(2.dp)
-                                            )
-                                    ) {
-                                        Text(
-                                            text = "${page + 1}/${apartmentInfo.pictures.size}",
-                                            color = White,
-                                            fontSize = 12.sp,
-                                            fontWeight = FontWeight.Medium,
-                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
-                                        )
-                                    }
-                                }
-                            }
+                            PhotoPager(pictureUrls = apartmentInfo.pictures)
                         }
                         item {
                             Text(
@@ -91,7 +61,7 @@ class MainActivity : ComponentActivity() {
                                 color = Black202020,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp)
+                                modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp)
                             )
                         }
                         item {
@@ -100,8 +70,38 @@ class MainActivity : ComponentActivity() {
                                 color = Green500,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                             )
+                        }
+                        item {
+                            Text(
+                                text = "${apartmentInfo.address.street}, ${apartmentInfo.address.zipCode} ${apartmentInfo.address.city}",
+                                color = Gray600,
+                                fontSize = 14.sp,
+                                modifier = Modifier
+                                    .padding(start = 8.dp, end = 8.dp, top = 8.dp)
+                                    .clickable {
+                                        // todo: open maps
+                                    }
+                            )
+                        }
+                        item {
+                            AdMetadata(
+                                postDate = apartmentInfo.postDate,
+                                visits = apartmentInfo.visits,
+                                apartmentId = apartmentInfo.id,
+                            )
+                        }
+                        if (apartmentInfo.attributes.isNotEmpty()) {
+                            item {
+                                Column {
+                                    Spacer(
+                                        modifier = Modifier
+                                            .height(8.dp)
+                                            .background(WhiteF2F2F2)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
