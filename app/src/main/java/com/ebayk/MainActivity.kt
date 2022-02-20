@@ -12,7 +12,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
-
 @ExperimentalPagerApi
 class MainActivity : ComponentActivity() {
 
@@ -36,7 +35,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun openDocument(link: String) {
-        // todo: open pdf
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        startActivity(browserIntent)
     }
     // todo: проверить на старых девайсах с навбаром
     // todo: проверить с большим текстом
