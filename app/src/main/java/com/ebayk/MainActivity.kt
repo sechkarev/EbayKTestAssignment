@@ -41,5 +41,4 @@ class MainActivity : ComponentActivity() {
         startActivity(Intent.createChooser(intent, getString(R.string.select_app_to_open_pdf)))
     }
     // todo: проверить на старых девайсах с навбаром
-    // todo: проверить с большим текстом
 }

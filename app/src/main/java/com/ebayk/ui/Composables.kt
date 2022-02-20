@@ -181,6 +181,7 @@ private fun PhotoPager(pictureUrls: List<String>) {
                     .height(250.dp)
                     .fillMaxWidth()
             )
+            // todo: clickable images. "Clicking on an image opens it in a new screen with bigger resolution"
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)

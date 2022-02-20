@@ -12,6 +12,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+// todo: test this, use case and utils
 class MainViewModel(
     private val retrieveApartmentInfo: RetrieveApartmentInfo
 ) : ViewModel() {
@@ -44,7 +45,8 @@ class MainViewModel(
 
     private fun mapApartmentDetails(apartmentDetails: ApartmentDetails) = apartmentDetails.copy(
         pictures = apartmentDetails.pictures.map { pictureUrl ->
-            pictureUrl.replace("{imageId}", "1") //todo: photos not always exist
+            pictureUrl.replace("{imageId}", "1")
+            //todo: photos not always exist: https://i.ebayimg.com/00/s/MTA2NlgxNjAw/z/w4sAAOSwYRJhSgCD/$_1.JPG is empty, https://i.ebayimg.com/00/s/MTA2NlgxNjAw/z/w4sAAOSwYRJhSgCD/$_57.JPG is not
         },
         postDate = apartmentDetails.postDate.substringBefore("T").let {
             try {
@@ -57,4 +59,5 @@ class MainViewModel(
             }
         }
     )
+    // todo: delete this mapping. make these fields properties of the classes. for images - both 1 and 57
 }
