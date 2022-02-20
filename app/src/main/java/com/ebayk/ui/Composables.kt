@@ -2,6 +2,7 @@ package com.ebayk.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.ebayk.R
 import com.ebayk.dto.Attribute
+import com.ebayk.dto.Document
 import com.ebayk.ui.theme.*
 import com.ebayk.util.divideToPairs
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -149,7 +152,7 @@ fun Details(attributes: List<Attribute>) {
 
 @Composable
 fun Features(features: List<String>) {
-    Column {
+    Column(modifier = Modifier.padding(bottom = 8.dp)) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -175,6 +178,60 @@ fun Features(features: List<String>) {
                 TextWithCheckMark(text = it.first, modifier = Modifier.weight(1f))
                 it.second?.let {
                     TextWithCheckMark(text = it, Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AdditionalInfo(documents: List<Document>) {
+    Column(Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+                .background(WhiteF2F2F2)
+        )
+        Text(
+            text = stringResource(id = R.string.additional_info),
+            color = Black202020,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
+        )
+        documents.forEach {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(WhiteF2F2F2)
+                    .padding(top = 4.dp, start = 8.dp, end = 8.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        // todo: on pdf clicked
+                    }
+            ) {
+                Row(Modifier.padding(vertical = 8.dp, horizontal = 8.dp)) {
+                    DrawableWrapper(
+                        drawableStart = R.drawable.ic_document,
+                    ) {
+                        Text(
+                            text = it.title,
+                            color = Black202020,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(start = 8.dp),
+                        )
+                    }
+                    Spacer(Modifier.weight(1f))
+                    Image(
+                        painter = painterResource(id = R.drawable.chevron),
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
                 }
             }
         }

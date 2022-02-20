@@ -25,16 +25,14 @@ fun DrawableWrapper(
         ) {
             content()
         }
-        drawableStart.let {
-            Image(
-                painter = painterResource(id = it),
-                contentDescription = null,
-                Modifier.constrainAs(refImgStart) {
-                    top.linkTo(refContent.top)
-                    bottom.linkTo(refContent.bottom)
-                    start.linkTo(parent.start)
-                }
-            )
-        }
+        Image(
+            painter = painterResource(id = drawableStart),
+            contentDescription = null,
+            Modifier.constrainAs(refImgStart) {
+                top.linkTo(refContent.top)
+                bottom.linkTo(refContent.bottom)
+                start.linkTo(parent.start)
+            }
+        )
     }
 }
