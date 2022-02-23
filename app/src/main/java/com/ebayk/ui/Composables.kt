@@ -395,54 +395,29 @@ private fun AdditionalInfo(
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
         )
         documents.forEach {
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(WhiteF2F2F2)
-                    .padding(top = 4.dp, start = 8.dp, end = 8.dp)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onDocumentClick(it.link) }
             ) {
-                ConstraintLayout(
+                Spacer(
                     modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 8.dp)
-                        .fillMaxWidth()
-                ) {
-                    val (textWithWrapper, chevronDrawable) = createRefs()
-                    DrawableWrapper(
-                        drawableStart = R.drawable.ic_document,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 8.dp)
-                            .constrainAs(textWithWrapper) {
-                                start.linkTo(parent.start)
-                                end.linkTo(chevronDrawable.start)
-                            }
-                    ) {
-                        Text(
-                            text = it.title,
-                            color = Black202020,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(start = 8.dp)
-                        )
-                    }
-                    Image(
-                        painter = painterResource(id = R.drawable.chevron),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .constrainAs(chevronDrawable) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                end.linkTo(parent.end)
-                            }
-                    )
-                }
+                        .fillMaxHeight()
+                        .width(8.dp)
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .background(WhiteF2F2F2)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(8.dp)
+                )
             }
+            DocumentItem(document = it, onDocumentClick = onDocumentClick)
         }
     }
 }
@@ -476,6 +451,54 @@ private fun Description(description: String) {
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
                 modifier = Modifier.padding(top = 12.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun DocumentItem(
+    document: Document,
+    onDocumentClick: (String) -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onDocumentClick(document.link) }
+    ) {
+        ConstraintLayout(
+            modifier = Modifier
+                .padding(vertical = 8.dp, horizontal = 8.dp)
+                .fillMaxWidth()
+        ) {
+            val (textWithWrapper, chevronDrawable) = createRefs()
+            DrawableWrapper(
+                drawableStart = R.drawable.ic_document,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+                    .constrainAs(textWithWrapper) {
+                        start.linkTo(parent.start)
+                        end.linkTo(chevronDrawable.start)
+                    }
+            ) {
+                Text(
+                    text = document.title,
+                    color = Black202020,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+            Image(
+                painter = painterResource(id = R.drawable.chevron),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .constrainAs(chevronDrawable) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        end.linkTo(parent.end)
+                    }
             )
         }
     }
