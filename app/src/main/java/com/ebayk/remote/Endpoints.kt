@@ -1,6 +1,6 @@
 package com.ebayk.remote
 
-import com.ebayk.dto.ApartmentDetails
+import com.ebayk.model.dto.ApartmentDetails
 import retrofit2.http.GET
 import retrofit2.http.Path
 

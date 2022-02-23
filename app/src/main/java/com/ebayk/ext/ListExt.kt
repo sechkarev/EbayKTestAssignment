@@ -1,4 +1,4 @@
-package com.ebayk.util
+package com.ebayk.ext
 
 fun<T> List<T>.divideToPairs(): List<Pair<T, T?>> {
     val result = mutableListOf<Pair<T, T?>>()

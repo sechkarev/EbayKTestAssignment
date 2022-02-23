@@ -1,6 +1,6 @@
 package com.ebayk.usecase
 
-import com.ebayk.dto.*
+import com.ebayk.model.dto.*
 import com.ebayk.remote.Endpoints
 
 class RetrieveApartmentInfo(

@@ -24,12 +24,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.LiveData
 import coil.compose.rememberImagePainter
 import com.ebayk.R
-import com.ebayk.dto.ApartmentDetails
-import com.ebayk.dto.Attribute
-import com.ebayk.dto.Document
+import com.ebayk.model.dto.ApartmentDetails
+import com.ebayk.model.dto.Attribute
+import com.ebayk.model.dto.Document
 import com.ebayk.ui.theme.*
-import com.ebayk.util.ApartmentInfoLoadingStatus
-import com.ebayk.util.divideToPairs
+import com.ebayk.model.ApartmentInfoLoadingStatus
+import com.ebayk.ext.divideToPairs
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -96,7 +96,7 @@ private fun Advertisement(
 ) {
     LazyColumn {
         item {
-            PhotoPager(pictureUrls = apartmentInfo.pictures)
+            PhotoPager(pictureUrls = apartmentInfo.previewPictureUrls)
         }
         item {
             Text(
@@ -133,7 +133,7 @@ private fun Advertisement(
         }
         item {
             AdMetadata(
-                postDate = apartmentInfo.postDate,
+                postDate = apartmentInfo.formattedPostDate,
                 visits = apartmentInfo.visits,
                 apartmentId = apartmentInfo.id,
             )

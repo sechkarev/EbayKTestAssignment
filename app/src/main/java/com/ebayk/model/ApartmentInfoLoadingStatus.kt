@@ -1,6 +1,6 @@
-package com.ebayk.util
+package com.ebayk.model
 
-import com.ebayk.dto.ApartmentDetails
+import com.ebayk.model.dto.ApartmentDetails
 
 sealed interface ApartmentInfoLoadingStatus {
     object Loading : ApartmentInfoLoadingStatus
