@@ -36,6 +36,7 @@ import com.ebayk.model.ApartmentInfoLoadingStatus
 import com.ebayk.ext.divideToPairs
 import com.ebayk.model.dto.PictureUrls
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -56,12 +57,13 @@ fun AdvertisementScreen(
         ProvideWindowInsets {
             val systemUiController = rememberSystemUiController()
             SideEffect {
-                systemUiController.setSystemBarsColor(Color.Transparent)
+                systemUiController.setStatusBarColor(Color.Transparent)
             }
             when (val apartmentInfoLoadingStatus = apartmentInfoLiveData.observeAsState().value) {
                 is ApartmentInfoLoadingStatus.Error -> ErrorMessage(onErrorMessageClick)
                 is ApartmentInfoLoadingStatus.Loading -> LoadingMessage()
                 is ApartmentInfoLoadingStatus.Success -> Advertisement(
+                    modifier = Modifier.navigationBarsPadding(),
                     apartmentInfo = apartmentInfoLoadingStatus.data,
                     onAddressClick = onAddressClick,
                     onDocumentClick = onDocumentClick,
@@ -101,13 +103,14 @@ private fun LoadingMessage() {
 
 @Composable
 private fun Advertisement(
+    modifier: Modifier,
     apartmentInfo: ApartmentDetails,
     onAddressClick: (String, String) -> Unit,
     onDocumentClick: (String) -> Unit,
     onPictureClick: (String) -> Unit,
     onShareButtonClick: () -> Unit,
 ) {
-    LazyColumn {
+    LazyColumn(modifier) {
         item {
             PhotoPager(
                 pictureUrls = apartmentInfo.pictureUrls,
