@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
@@ -28,13 +29,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.LiveData
 import coil.compose.rememberImagePainter
 import com.ebayk.R
+import com.ebayk.ext.divideToPairs
+import com.ebayk.model.ApartmentInfoLoadingStatus
 import com.ebayk.model.dto.ApartmentDetails
 import com.ebayk.model.dto.Attribute
 import com.ebayk.model.dto.Document
-import com.ebayk.ui.theme.*
-import com.ebayk.model.ApartmentInfoLoadingStatus
-import com.ebayk.ext.divideToPairs
 import com.ebayk.model.dto.PictureUrls
+import com.ebayk.ui.theme.*
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
@@ -56,8 +57,15 @@ fun AdvertisementScreen(
     AppTheme {
         ProvideWindowInsets {
             val systemUiController = rememberSystemUiController()
+            val useDarkIcons = colors.isLight
+            // todo: this should probably depend not on the theme, but on the image itself.
+            //  Also I'd love to return opacity to the status bar when the user scrolls over the image,
+            //  but I don't know how.
             SideEffect {
-                systemUiController.setStatusBarColor(Color.Transparent)
+                systemUiController.setStatusBarColor(
+                    color = Color.Transparent,
+                    darkIcons = useDarkIcons,
+                )
             }
             when (val apartmentInfoLoadingStatus = apartmentInfoLiveData.observeAsState().value) {
                 is ApartmentInfoLoadingStatus.Error -> ErrorMessage(onErrorMessageClick)
@@ -202,15 +210,14 @@ private fun PhotoPager(
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
-                    .height(250.dp)
+                    .height(300.dp) // an arbitrary number
                     .fillMaxWidth()
                     .clickable { onPictureClick(pictureUrls[page].fullSizeUrl) }
             )
-
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(vertical = 16.dp, horizontal = 16.dp)
+                    .padding(16.dp)
                     .background(
                         color = Black80202020,
                         shape = RoundedCornerShape(2.dp)
@@ -232,7 +239,7 @@ private fun PhotoPager(
         ) {
             Icon(
                 painter = rememberVectorPainter(image = Icons.Filled.Share),
-                tint = Color.White,
+                tint = colors.onBackground, // todo: this should probably depend not on the theme, but on the image itself
                 contentDescription = stringResource(id = R.string.share_content_description),
                 modifier = Modifier
                     .size(48.dp)
