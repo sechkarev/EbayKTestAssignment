@@ -96,7 +96,7 @@ private fun Advertisement(
 ) {
     LazyColumn {
         item {
-            PhotoPager(pictureUrls = apartmentInfo.previewPictureUrls)
+            PhotoPager(pictureUrls = apartmentInfo.pictureUrls.values.map { it.previewUrl })
         }
         item {
             Text(

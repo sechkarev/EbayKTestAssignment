@@ -1,6 +1,5 @@
 package com.ebayk.model.dto
 
-import android.util.Log
 import com.google.gson.annotations.SerializedName
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -19,16 +18,14 @@ data class ApartmentDetails(
     val pictures: List<String>,
     val documents: List<Document>,
 ) {
-    val previewPictureUrls
-        get() = pictures.map {
-            it.replace("{imageId}", "1")
+    val pictureUrls
+        get() = pictures.associateWith {
+            PictureUrls(
+                it.replace("{imageId}", "1"),
+                it.replace("{imageId}", "57"),
+            )
         }
     //todo: photos not always exist: https://i.ebayimg.com/00/s/MTA2NlgxNjAw/z/w4sAAOSwYRJhSgCD/$_1.JPG is empty, https://i.ebayimg.com/00/s/MTA2NlgxNjAw/z/w4sAAOSwYRJhSgCD/$_57.JPG is not
-
-    val fullSizePictureUrls
-        get() = pictures.map {
-            it.replace("{imageId}", "57")
-        }
 
     val formattedPostDate
         get() = postDate.substringBefore("T").let {
@@ -41,6 +38,11 @@ data class ApartmentDetails(
             }
         }
 }
+
+data class PictureUrls(
+    val previewUrl: String,
+    val fullSizeUrl: String,
+)
 
 data class Price(
     val currency: String,
