@@ -289,35 +289,41 @@ private fun Details(attributes: List<Attribute>) {
             fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 8.dp)
         )
-        attributes.forEach {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(WhiteF2F2F2)
-                    .padding(top = 4.dp, start = 8.dp, end = 8.dp) // todo: мне кажется, или она все равно до краев расползается?
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp, horizontal = 8.dp)
-            ) {
-                Text(
-                    text = it.label,
-                    color = Black202020,
-                    fontSize = 14.sp,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        ) {
+            attributes.forEach {
+                Box(
                     modifier = Modifier
-                        .padding(end = 8.dp)
-                        .align(Alignment.CenterVertically)
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(WhiteF2F2F2)
+                        .padding(top = 4.dp)
                 )
-                Spacer(Modifier.weight(1f))
-                Text(
-                    text = if (it.unit.isNullOrBlank()) it.value else "${it.value} ${it.unit}",
-                    color = Gray600,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                ) {
+                    Text(
+                        text = it.label,
+                        color = Black202020,
+                        fontSize = 14.sp,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                    Spacer(Modifier.weight(1f))
+                    Text(
+                        text = if (it.unit.isNullOrBlank()) it.value else "${it.value} ${it.unit}",
+                        color = Gray600,
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
             }
         }
     }
@@ -332,35 +338,36 @@ private fun Features(features: List<String>) {
                 .height(8.dp)
                 .background(WhiteF2F2F2)
         )
-        Text(
-            text = stringResource(id = R.string.features),
-            color = Black202020,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(WhiteF2F2F2)
-                .padding(top = 4.dp, start = 8.dp, end = 8.dp)
-        )
-        features.divideToPairs().forEach {
-            Row(modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)) {
-                TextWithCheckMark(
-                    text = it.first,
-                    modifier = Modifier
-                        .weight(1f)
-                        .align(Alignment.CenterVertically),
-                )
-                it.second?.let {
+        Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+            Text(
+                text = stringResource(id = R.string.features),
+                color = Black202020,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(WhiteF2F2F2)
+            )
+            features.divideToPairs().forEach {
+                Row(modifier = Modifier.padding(vertical = 6.dp)) {
                     TextWithCheckMark(
-                        text = it,
+                        text = it.first,
                         modifier = Modifier
                             .weight(1f)
                             .align(Alignment.CenterVertically),
                     )
+                    it.second?.let {
+                        TextWithCheckMark(
+                            text = it,
+                            modifier = Modifier
+                                .weight(1f)
+                                .align(Alignment.CenterVertically),
+                        )
+                    }
                 }
             }
         }
