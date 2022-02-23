@@ -2,17 +2,12 @@ package com.ebayk.usecase
 
 import com.ebayk.dto.*
 import com.ebayk.remote.Endpoints
-import kotlinx.coroutines.delay
 
 class RetrieveApartmentInfo(
     private val endpoints: Endpoints
 ) {
 
-    suspend operator fun invoke(): ApartmentDetails {
-        delay(100)
-        return testApartmentInfo
-    }
-    // todo: use endpoints.retrieveApartmentInfo()
+    suspend operator fun invoke() = endpoints.retrieveApartmentInfo()
 
     companion object {
         val testApartmentInfo = ApartmentDetails(

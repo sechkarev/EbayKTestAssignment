@@ -1,16 +1,11 @@
 package com.ebayk.remote
 
 import com.ebayk.dto.ApartmentDetails
-import okhttp3.Credentials
 import retrofit2.http.GET
-import retrofit2.http.Header
+import retrofit2.http.Path
 
 interface Endpoints {
 
-    @GET("candidate/ads/1118635128")
-    suspend fun retrieveApartmentInfo(
-        @Header("authorization") credentials: String = Credentials.basic("candidate", "yx6Xz62y"),
-        @Header("user-agent") userAgent: String = "some-user-agent",
-        @Header("accept") accept: String = "*/*",
-    ): ApartmentDetails
+    @GET("candidate/ads/{ad_id}")
+    suspend fun retrieveApartmentInfo(@Path("ad_id") adId: String = "1118635128"): ApartmentDetails
 }
