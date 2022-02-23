@@ -97,11 +97,6 @@ curl --basic -u candidate:yx6Xz62y --user-agent "some-user-agent" https://gatewa
 
 ## Your comments / remarks
 
-How did you approach the task?
-What architecture-layers did you create and why?
-What would you do if you had more time?
-Which trade-offs did you take?
-
 As soon as I received the task, I decided that it must be a good opportunity to put Jetpack Compose to use. I have very little experience with this library (on my current job we still create layouts in XML) and I'd work faster and be way more confident if I used the tools I am more familiar with, but the age of Compose is coming, and I think that the faster I get used to it, the better. And to be honest, I just wanted to try something new (or relatively new). 
 
 I decided to not use Fragments — with Compose they are not a must anymore. First of all, I opened the [link](https://gateway.ebay-kleinanzeigen.de/mobile-api/candidate/ads/1118635128) in Chrome, copy-pasted the response and created the layout, hard-coding the values I have gotten from backend. I develop apps "top-to-bottom": first create the layouts and make them look as designed, and then connect real business logic to it.
