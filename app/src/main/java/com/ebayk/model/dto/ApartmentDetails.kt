@@ -19,7 +19,7 @@ data class ApartmentDetails(
     val documents: List<Document>,
 ) {
     val pictureUrls
-        get() = pictures.associateWith {
+        get() = pictures.map {
             PictureUrls(
                 it.replace("{imageId}", "1"),
                 it.replace("{imageId}", "57"),

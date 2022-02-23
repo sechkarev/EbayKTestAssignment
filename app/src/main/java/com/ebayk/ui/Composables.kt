@@ -30,6 +30,7 @@ import com.ebayk.model.dto.Document
 import com.ebayk.ui.theme.*
 import com.ebayk.model.ApartmentInfoLoadingStatus
 import com.ebayk.ext.divideToPairs
+import com.ebayk.model.dto.PictureUrls
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -41,6 +42,7 @@ fun AdvertisementScreen(
     apartmentInfoLiveData: LiveData<ApartmentInfoLoadingStatus>,
     onAddressClick: (String, String) -> Unit,
     onDocumentClick: (String) -> Unit,
+    onPictureClick: (String) -> Unit,
     onErrorMessageClick: () -> Unit,
 ) {
     AppTheme {
@@ -55,7 +57,8 @@ fun AdvertisementScreen(
                 is ApartmentInfoLoadingStatus.Success -> Advertisement(
                     apartmentInfo = apartmentInfoLoadingStatus.data,
                     onAddressClick = onAddressClick,
-                    onDocumentClick = onDocumentClick
+                    onDocumentClick = onDocumentClick,
+                    onPictureClick = onPictureClick,
                 )
                 else -> {}
             }
@@ -93,10 +96,14 @@ private fun Advertisement(
     apartmentInfo: ApartmentDetails,
     onAddressClick: (String, String) -> Unit,
     onDocumentClick: (String) -> Unit,
+    onPictureClick: (String) -> Unit,
 ) {
     LazyColumn {
         item {
-            PhotoPager(pictureUrls = apartmentInfo.pictureUrls.values.map { it.previewUrl })
+            PhotoPager(
+                pictureUrls = apartmentInfo.pictureUrls,
+                onPictureClick = onPictureClick,
+            )
         }
         item {
             Text(
@@ -166,7 +173,10 @@ private fun Advertisement(
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-private fun PhotoPager(pictureUrls: List<String>) {
+private fun PhotoPager(
+    pictureUrls: List<PictureUrls>,
+    onPictureClick: (String) -> Unit,
+) {
     HorizontalPager(count = pictureUrls.size) { page ->
         Box(
             modifier = Modifier
@@ -174,14 +184,14 @@ private fun PhotoPager(pictureUrls: List<String>) {
                 .wrapContentHeight()
         ) {
             Image(
-                painter = rememberImagePainter(pictureUrls[page]),
+                painter = rememberImagePainter(pictureUrls[page].previewUrl),
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .height(250.dp)
                     .fillMaxWidth()
+                    .clickable { onPictureClick(pictureUrls[page].fullSizeUrl) }
             )
-            // todo: clickable images. "Clicking on an image opens it in a new screen with bigger resolution"
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)

@@ -25,9 +25,17 @@ class MainActivity : ComponentActivity() {
                 apartmentInfoLiveData = viewModel.apartmentInfo,
                 onAddressClick = this::openLocationOnMap,
                 onDocumentClick = this::openDocument,
+                onPictureClick = this::openImage,
                 onErrorMessageClick = viewModel::onErrorMessageClick,
             )
         }
+    }
+
+    private fun openImage(imageUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(Uri.parse(imageUrl), "image/*")
+        }
+        startActivity(intent)
     }
 
     private fun openLocationOnMap(latitude: String, longitude: String) {
