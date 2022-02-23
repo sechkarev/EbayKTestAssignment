@@ -102,5 +102,13 @@ What architecture-layers did you create and why?
 What would you do if you had more time?
 Which trade-offs did you take?
 
-* FILL-ME 1
-* FILL-ME 2
+As soon as I received the task, I decided that it must be a good opportunity to put Jetpack Compose to use. I have very little experience with this library (on my current job we still create layouts in XML) and I'd work faster and be way more confident if I used the tools I am more familiar with, but the age of Compose is coming, and I think that the faster I get used to it, the better. And to be honest, I just wanted to try something new (or relatively new). 
+
+I decided to not use Fragments — with Compose they are not a must anymore. First of all, I opened the [link](https://gateway.ebay-kleinanzeigen.de/mobile-api/candidate/ads/1118635128) in Chrome, copy-pasted the response and created the layout, hard-coding the values I have gotten from backend. I develop apps "top-to-bottom": first create the layouts and make them look as designed, and then connect real business logic to it.
+
+After the UI was done (I have left a couple of visual bugs, but fixed them later), I wrote the ViewModel and the Use Case. I decided to use MVVM because it's a solution endorsed by Google and is basically the to-go approach in modern Android development — that's to be expected. The class "RetrieveApartmentInfo" and its method "invoke" might seem unusual though, but that's my favourite approach to structuring the Model layer: breaking business logic down to tiny easily testable chunks and inject them to ViewModels. With this approach, having a DI library is necessary — I added Koin because it's lightweight and I am familiar with it. As a finishing touch, I wrote unit tests.
+
+What would I do if I had more time (also trade-offs): 
+* Unit-test the UI. I have zero experience with Compose Testing kit, but heard that it makes writing UI tests less painful than it is now, and in the future I'll definitely give it a try. Especially if someone decouples Compose tests from real devices — as far as I know, right now these tests are still instrumented.
+* Make the UI a bit more adaptive. For example, right now the color of the share icon depends on the theme, but ideally it should depend not on the theme but on the image it's drawn over. And it's hard to figure out, because I don't know how the image will look like before I draw it. There must be libraries that take care of this, but in a real case I will first and foremost go to our designers and discuss this topic with them. Same with the status bar: it is transparent when we draw a photo behind it, and that's cool, but we need to make it opaque again on scrolling (I saw how it is done in the real Kleinanzeigen app — nicely!), and I know how to do this... without Compose. Again, that's a topic worth discussing, and since there were no requirements, I decided to leave it as is because any beautiful solution would be too time-consuming :(
+* Support the Dark Theme. But there were neither requirements nor designs, and I decided to not bother.
