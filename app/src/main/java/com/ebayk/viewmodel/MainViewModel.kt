@@ -35,8 +35,7 @@ class MainViewModel(
                     retrieveApartmentInfo()
                 )
             } catch (t: Throwable) {
-                Log.e("MainViewModelImpl", "retrieveApartmentInfo fail", t)
-                apartmentInfo.value = ApartmentInfoLoadingStatus.Error
+                apartmentInfo.value = ApartmentInfoLoadingStatus.Error(t)
             }
         }
     }
