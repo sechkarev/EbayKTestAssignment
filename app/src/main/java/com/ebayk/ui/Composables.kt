@@ -42,6 +42,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.util.*
 
+// todo: tests?
 @Composable
 fun AdvertisementScreen(
     apartmentInfoLiveData: LiveData<ApartmentInfoLoadingStatus>,
