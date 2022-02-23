@@ -18,6 +18,7 @@ data class ApartmentDetails(
     val pictures: List<String>,
     val documents: List<Document>,
 ) {
+
     val pictureUrls
         get() = pictures.map {
             PictureUrls(

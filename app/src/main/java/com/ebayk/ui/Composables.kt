@@ -210,7 +210,7 @@ private fun PhotoPager(
                 Icon(
                     painter = rememberVectorPainter(image = Icons.Filled.Share),
                     tint = Color.White,
-                    contentDescription = "", // todo: content description
+                    contentDescription = stringResource(id = R.string.share_content_description),
                     modifier = Modifier
                         .size(48.dp)
                         .padding(top = 16.dp, end = 16.dp)

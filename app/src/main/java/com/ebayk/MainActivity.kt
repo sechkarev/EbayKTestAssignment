@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun shareAd() {
-        // todo: share ad
+        // todo: what should this do?
     }
 
     private fun openImage(imageUrl: String) {
