@@ -6,13 +6,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +36,7 @@ import com.ebayk.model.ApartmentInfoLoadingStatus
 import com.ebayk.ext.divideToPairs
 import com.ebayk.model.dto.PictureUrls
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -44,6 +49,7 @@ fun AdvertisementScreen(
     onDocumentClick: (String) -> Unit,
     onPictureClick: (String) -> Unit,
     onErrorMessageClick: () -> Unit,
+    onShareButtonClick: () -> Unit,
 ) {
     AppTheme {
         ProvideWindowInsets {
@@ -59,6 +65,7 @@ fun AdvertisementScreen(
                     onAddressClick = onAddressClick,
                     onDocumentClick = onDocumentClick,
                     onPictureClick = onPictureClick,
+                    onShareButtonClick = onShareButtonClick,
                 )
                 else -> {}
             }
@@ -97,12 +104,14 @@ private fun Advertisement(
     onAddressClick: (String, String) -> Unit,
     onDocumentClick: (String) -> Unit,
     onPictureClick: (String) -> Unit,
+    onShareButtonClick: () -> Unit,
 ) {
     LazyColumn {
         item {
             PhotoPager(
                 pictureUrls = apartmentInfo.pictureUrls,
                 onPictureClick = onPictureClick,
+                onShareButtonClick = onShareButtonClick,
             )
         }
         item {
@@ -176,6 +185,7 @@ private fun Advertisement(
 private fun PhotoPager(
     pictureUrls: List<PictureUrls>,
     onPictureClick: (String) -> Unit,
+    onShareButtonClick: () -> Unit,
 ) {
     HorizontalPager(count = pictureUrls.size) { page ->
         Box(
@@ -194,6 +204,21 @@ private fun PhotoPager(
             )
             Box(
                 modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .statusBarsPadding()
+            ) {
+                Icon(
+                    painter = rememberVectorPainter(image = Icons.Filled.Share),
+                    tint = Color.White,
+                    contentDescription = "", // todo: content description
+                    modifier = Modifier
+                        .size(48.dp)
+                        .padding(top = 16.dp, end = 16.dp)
+                        .clickable { onShareButtonClick() }
+                )
+            }
+            Box(
+                modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(vertical = 16.dp, horizontal = 16.dp)
                     .background(
@@ -209,7 +234,6 @@ private fun PhotoPager(
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                 )
             }
-            // todo: share button
         }
     }
 }
@@ -282,7 +306,9 @@ private fun Details(attributes: List<Attribute>) {
                     text = it.label,
                     color = Black202020,
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(end = 8.dp).align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .align(Alignment.CenterVertically)
                 )
                 Spacer(Modifier.weight(1f))
                 Text(

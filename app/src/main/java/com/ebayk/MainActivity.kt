@@ -27,8 +27,13 @@ class MainActivity : ComponentActivity() {
                 onDocumentClick = this::openDocument,
                 onPictureClick = this::openImage,
                 onErrorMessageClick = viewModel::onErrorMessageClick,
+                onShareButtonClick = this::shareAd,
             )
         }
+    }
+
+    private fun shareAd() {
+        // todo: share ad
     }
 
     private fun openImage(imageUrl: String) {
