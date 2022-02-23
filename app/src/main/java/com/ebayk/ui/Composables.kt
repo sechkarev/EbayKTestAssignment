@@ -187,12 +187,12 @@ private fun PhotoPager(
     onPictureClick: (String) -> Unit,
     onShareButtonClick: () -> Unit,
 ) {
-    HorizontalPager(count = pictureUrls.size) { page ->
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-        ) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        HorizontalPager(count = pictureUrls.size) { page ->
             Image(
                 painter = rememberImagePainter(pictureUrls[page].previewUrl),
                 contentDescription = null,
@@ -202,21 +202,7 @@ private fun PhotoPager(
                     .fillMaxWidth()
                     .clickable { onPictureClick(pictureUrls[page].fullSizeUrl) }
             )
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .statusBarsPadding()
-            ) {
-                Icon(
-                    painter = rememberVectorPainter(image = Icons.Filled.Share),
-                    tint = Color.White,
-                    contentDescription = stringResource(id = R.string.share_content_description),
-                    modifier = Modifier
-                        .size(48.dp)
-                        .padding(top = 16.dp, end = 16.dp)
-                        .clickable { onShareButtonClick() }
-                )
-            }
+
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -234,6 +220,21 @@ private fun PhotoPager(
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                 )
             }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .statusBarsPadding()
+        ) {
+            Icon(
+                painter = rememberVectorPainter(image = Icons.Filled.Share),
+                tint = Color.White,
+                contentDescription = stringResource(id = R.string.share_content_description),
+                modifier = Modifier
+                    .size(48.dp)
+                    .padding(top = 16.dp, end = 16.dp)
+                    .clickable { onShareButtonClick() }
+            )
         }
     }
 }
@@ -455,27 +456,28 @@ private fun Description(description: String) {
                 .height(8.dp)
                 .background(WhiteF2F2F2)
         )
-        Text(
-            text = stringResource(id = R.string.description),
-            color = Black202020,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(WhiteF2F2F2)
-                .padding(start = 8.dp, end = 8.dp)
-        )
-        Text(
-            text = description,
-            color = Black202020,
-            fontSize = 14.sp,
-            lineHeight = 20.sp,
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 12.dp)
-        )
+        Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+            Text(
+                text = stringResource(id = R.string.description),
+                color = Black202020,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(WhiteF2F2F2)
+            )
+            Text(
+                text = description,
+                color = Black202020,
+                fontSize = 14.sp,
+                lineHeight = 20.sp,
+                modifier = Modifier.padding(top = 12.dp)
+            )
+        }
     }
 }
 
